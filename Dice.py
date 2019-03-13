@@ -70,7 +70,7 @@ class Dice():
        return(dice1_wins, dice2_wins)
 
 
-    def compete(self, other_dice, n):
+    def compete(self, other_dice, n, individual = False):
         dice_beaten = {}
         dice_lost = {}
         winrate = 0
@@ -87,11 +87,13 @@ class Dice():
 
         for key in dice_beaten:
             winrate += dice_beaten[key]
-            print("%s beats %s with an average of %.1f%% win rate" % (self.name, key, dice_beaten[key]))
+            if individual:
+                print("%s beats %s with an average of %.1f%% win rate" % (self.name, key, dice_beaten[key]))
 
         for key in dice_lost:
             winrate += dice_lost[key]
-            print("%s loses to %s with an average of only %.1f%% win rate" % (self.name, key, dice_lost[key]))
+            if individual:
+                print("%s loses to %s with an average of only %.1f%% win rate" % (self.name, key, dice_lost[key]))
 
         average_winrate = winrate/len(other_dice)
         print("%s has an average winrate of %.1f%% winrate against the other dice" % (self.name, average_winrate))
@@ -110,7 +112,7 @@ Dice2 = Dice(dice2_dict)
 Dice3 = Dice(dice3_dict)
 
 Dice1.compete([Dice2, Dice3], 1000000)
-# Dice2.compete([Dice1, Dice3], 1000000)
-# Dice3.compete([Dice1, Dice2], 1000000)
+Dice2.compete([Dice1, Dice3], 1000000)
+Dice3.compete([Dice1, Dice2], 1000000)
 
 
