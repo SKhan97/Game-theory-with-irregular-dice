@@ -1,38 +1,14 @@
 import random
-from tqdm import trange
-
-dice1_dict = {
-    'name': 'Transparent',
-    'value1': 3,
-    'prob1': 5/6,
-    'value2': 6,
-    'prob2': 1/6,
-}
-
-dice2_dict = {
-    'name': 'Grey',
-    'value1': 2,
-    'prob1': 1/2,
-    'value2': 5,
-    'prob2': 1/2,
-}
-
-dice3_dict = {
-    'name': 'Blue',
-    'value1': 1,
-    'prob1': 1/6,
-    'value2': 4,
-    'prob2': 5/6,
-}
 
 class Dice():
     "Class to generate a die which can only return 2 values"
-    def __init__(self, dice):
-        self.value1 = dice['value1']
-        self.prob1 = dice['prob1']
-        self.value2 = dice['value2']
-        self.prob2 = dice['prob2']
-        self.name = dice['name']
+    def __init__(self, name, value1, prob1, value2, prob2):
+        self.name = name
+        self.value1 = value1
+        self.prob1 = prob1
+        self.value2 = value2
+        self.prob2 = prob2
+        
 
     def roll(self):
         x=random.random()
@@ -58,7 +34,7 @@ class Dice():
        dice1_wins = 0
        dice2_wins = 0
 
-       for i in trange(n):
+       for i in range(n):
            winner = self.compare(dice2)
            if winner == self.name:
                dice1_wins +=1
@@ -71,7 +47,7 @@ class Dice():
 
 
     def compete(self, other_dice, n, individual = False):
-        dice_beaten = {}
+        dice_win = {}
         dice_lost = {}
         winrate = 0
         for die in other_dice:
@@ -79,24 +55,24 @@ class Dice():
             win_percentage = 100 * self_wins / n
 
             if self_wins > other_wins:
-                dice_beaten[die.name] = win_percentage
+                dice_win[die.name] = win_percentage
             elif self_wins < other_wins:
                 dice_lost[die.name] = win_percentage
             else:
-                raise Exception('Either the dice are the same or unseen error. Try rerunning script')
+                raise Exception('Either the dice are the same or unseen error')
 
-        for key in dice_beaten:
-            winrate += dice_beaten[key]
+        for key in dice_win:
+            winrate += dice_win[key]
             if individual:
-                print("%s beats %s with an average of %.1f%% win rate" % (self.name, key, dice_beaten[key]))
+                print(f"{self.name} beats {key} with an average of {dice_win[key]} win rate")
 
         for key in dice_lost:
             winrate += dice_lost[key]
             if individual:
-                print("%s loses to %s with an average of only %.1f%% win rate" % (self.name, key, dice_lost[key]))
+                print(f"{self.name} loses to {key} with an average of only {dice_lost[key]} win rate")
 
         average_winrate = winrate/len(other_dice)
-        print("%s has an average winrate of %.1f%% winrate against the other dice" % (self.name, average_winrate))
+        print(f"{self.name} has an average winrate of {average_winrate} winrate against the other dice")
 
 
 
@@ -107,12 +83,14 @@ class Dice():
 
 
 
-Dice1 = Dice(dice1_dict)
-Dice2 = Dice(dice2_dict)
-Dice3 = Dice(dice3_dict)
 
-Dice1.compete([Dice2, Dice3], 1000000)
-Dice2.compete([Dice1, Dice3], 1000000)
-Dice3.compete([Dice1, Dice2], 1000000)
+
+dice1 = Dice('Transparent', 3, 5/6, 6, 1/6)
+dice2 = Dice('Grey', 2, 1/2, 5, 1/2)
+dice3 = Dice('Blue', 1, 1/6, 4, 5/6)
+
+dice1.compete([dice2, dice3], 100, individual=True)
+# dice2.compete([dice1, dice3], 100)
+# dice3.compete([dice1, dice2], 100)
 
 
