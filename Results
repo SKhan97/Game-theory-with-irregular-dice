@@ -1,0 +1,29 @@
+'Transparent' = 5/6 probability of 3 --- 1/6 probability of 6
+'Grey' = 1/2 probability of 2  --- 1/2 probability of 5
+'Blue' = 1/6 probability of 1 --- 5/6 probability of 4
+
+
+Overview of 10,000 rolls vs each other die
+
+Transparent beats Grey with an average of 58.27 win rate
+Transparent loses to Blue with an average of only 30.62 win rate
+
+Grey beats Blue with an average of 59.04 win rate
+Grey loses to Transparent with an average of only 41.47 win rate
+
+Blue beats Transparent with an average of 69.41 win rate
+Blue loses to Grey with an average of only 41.7 win rate
+
+(Slightly naive approach but seems logical and gives good heuristic)
+Simulating 10,000 rolls vs every other die, it seems as if the heirachy is as follows:
+
+Transparent > Grey > Blue > Transparent
+
+Looking at the win rates, it's evident that each die has one it beats and one it loses. Therefore it always makes sense to go 
+for Player 2 in this game and simply pick the die which is superior to the one your opponent picks. If you have to go Player 1 
+then picking Blue makes sense since it has the largest win rate by far but also a 'good loss rate' alongside Grey.
+
+Tbh if you know the odds are stacked against you (assuming perfect play by opponent) then maybe Player 1 should go for the 
+Transparent die and try to hit the 1/6 chance of getting a 6 and winning no matter what. It's hopeful but shoot for the moon sometimes.
+
+

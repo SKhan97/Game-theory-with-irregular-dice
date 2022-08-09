@@ -31,8 +31,7 @@ class Dice():
             raise Exception('Error with values')
 
     def calculate(self, dice2, n):
-       dice1_wins = 0
-       dice2_wins = 0
+       dice1_wins, dice2_wins = 0, 0
 
        for i in range(n):
            winner = self.compare(dice2)
@@ -47,8 +46,7 @@ class Dice():
 
 
     def compete(self, other_dice, n, individual = False):
-        dice_win = {}
-        dice_lost = {}
+        dice_win, dice_lost= {}, {}
         winrate = 0
         for die in other_dice:
             self_wins, other_wins = self.calculate(die,n)
@@ -58,6 +56,9 @@ class Dice():
                 dice_win[die.name] = win_percentage
             elif self_wins < other_wins:
                 dice_lost[die.name] = win_percentage
+
+            elif self_wins == other_wins:
+                raise Exception('Winrate is equal!')
             else:
                 raise Exception('Either the dice are the same or unseen error')
 
@@ -71,8 +72,8 @@ class Dice():
             if individual:
                 print(f"{self.name} loses to {key} with an average of only {dice_lost[key]} win rate")
 
-        average_winrate = winrate/len(other_dice)
-        print(f"{self.name} has an average winrate of {average_winrate} winrate against the other dice")
+        # average_winrate = winrate/len(other_dice)
+        # print(f"{self.name} has an average winrate of {average_winrate} winrate against the other dice")
 
 
 
@@ -89,8 +90,9 @@ dice1 = Dice('Transparent', 3, 5/6, 6, 1/6)
 dice2 = Dice('Grey', 2, 1/2, 5, 1/2)
 dice3 = Dice('Blue', 1, 1/6, 4, 5/6)
 
-dice1.compete([dice2, dice3], 100, individual=True)
-# dice2.compete([dice1, dice3], 100)
-# dice3.compete([dice1, dice2], 100)
+
+dice1.compete([dice2, dice3], 10000, individual=True)
+dice2.compete([dice1, dice3], 10000, individual=True)
+dice3.compete([dice1, dice2], 10000, individual=True)
 
 
