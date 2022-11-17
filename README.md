@@ -17,10 +17,10 @@ You can't simply take the expectation of each die because the actual value you'r
 
 
 Puzzle to figure out:
-How does this change if the game is the sum of two rolls rather than a single roll? How does it generalise to N rolls? 
+
 
 
 Questions Answered:
 Which player would you want to be and which die you would want to select for each player?
-
+How does this change if the game is the sum of two rolls rather than a single roll? How does it generalise to N rolls? 
 
